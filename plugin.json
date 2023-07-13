@@ -1,0 +1,18 @@
+{
+    "name": "siyuan-plugin-background-grid",
+    "author": "zuoez02",
+    "url": "https://github.com/zuoez02/siyuan-plugin-background-grid",
+    "version": "0.1.0",
+    "minAppVersion": "2.9.4",
+    "displayName": {
+        "default": "Background Grid",
+        "zh_CN": "背景方格"
+    },
+    "description": {
+        "default": "可设置形状和颜色的背景方格插件",
+        "zh_CN": "可设置形状和颜色的背景方格插件"
+    },
+    "readme": {
+        "default": "README.md"
+    }
+}
