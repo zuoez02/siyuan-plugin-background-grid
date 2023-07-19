@@ -1,6 +1,9 @@
 {
     "title": "Background Grid",
     "setting": "Setting",
+    "type": "type",
+    "grid": "grid",
+    "point": "point",
     "grid_size": "Grid size",
     "grid_color": "Grid color",
     "close": "Close"
