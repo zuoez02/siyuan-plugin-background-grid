@@ -20,6 +20,7 @@ function registerIcon(name, size, svg) {
 const defaultConfig = {
   styleId: "background-grid-plugin",
   setting: {
+    enabled: true,
     type: "grid", // grid or point
     width: 20,
     color: "rgba(187, 187, 187, 0.1)",
@@ -116,7 +117,7 @@ class BackgroundGridPlugin extends Plugin {
       this.apply();
       return;
     }
-    this.config = config;
+    this.config = Object.assign({}, this.config, config);
     this.apply();
   }
 
@@ -127,7 +128,9 @@ class BackgroundGridPlugin extends Plugin {
   async apply(name) {
     const id = this.config.styleId;
     let result;
-    if (this.config.setting.type === "grid") {
+    if (!this.config.setting.enabled) {
+      result = '';
+    } else if (this.config.setting.type === "grid") {
       result = `.protyle-wysiwyg {
         background: linear-gradient(90deg, ${this.config.setting.color} 3%, transparent 0), linear-gradient(${this.config.setting.color} 3%, transparent 0);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
@@ -152,8 +155,20 @@ class BackgroundGridPlugin extends Plugin {
     this.saveConfig();
   }
 
+  toggleEnabled() {
+    this.config.setting.enabled = !this.config.setting.enabled;
+    this.apply();
+  }
+
   addMenu(rect) {
     const menu = new Menu("ttsPluginTopBarMenu");
+    menu.addItem({
+      icon: this.config.setting.enabled ? "iconEyeoff" : 'iconEye',
+      label: this.config.setting.enabled ? this.i18n.turnOff : this.i18n.turnOn,
+      click: () => {
+        this.toggleEnabled();
+      },
+    });
     menu.addItem({
       icon: "iconSettings",
       label: this.i18n.setting,

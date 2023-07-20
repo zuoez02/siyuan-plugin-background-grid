@@ -6,5 +6,7 @@
     "point": "point",
     "grid_size": "Grid size",
     "grid_color": "Grid color",
-    "close": "Close"
+    "close": "Close",
+    "turnOn": "Turn On the function",
+    "turnOff": "Turn off the function"
 }

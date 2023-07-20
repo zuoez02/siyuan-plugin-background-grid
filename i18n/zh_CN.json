@@ -6,5 +6,7 @@
  "point": "点阵",
  "grid_size": "间距",
  "grid_color": "颜色",
- "close": "关闭"
+ "close": "关闭",
+ "turnOn": "开启背景",
+ "turnOff": "关闭背景"
 }
