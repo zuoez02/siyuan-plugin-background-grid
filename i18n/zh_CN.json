@@ -4,9 +4,12 @@
  "type": "类型",
  "grid": "方格",
  "point": "点阵",
- "grid_size": "间距",
+ "grid_width": "间距",
+ "grid_size": "尺寸",
  "grid_color": "颜色",
+ "grid_opacity": "透明度",
  "close": "关闭",
+ "reset": "重置",
  "turnOn": "开启背景",
  "turnOff": "关闭背景"
 }
