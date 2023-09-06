@@ -21,6 +21,7 @@ const defaultConfig = {
   styleId: "background-grid-plugin",
   setting: {
     enabled: true,
+    mode: "content", // content or editor
     type: "grid", // grid or point
     width: 20,
     size: 1,
@@ -55,7 +56,14 @@ class BackgroundGridPlugin extends Plugin {
       title: `${this.i18n.title} - ${this.i18n.setting}`,
       content: `
           <div id="background-grid-dialog" class="b3-dialog__content">
-          <div class="b3-dialog-input">
+              <div class="b3-dialog-input">
+              <label for="mode">${this.i18n.mode}</label>
+              <select class="b3-select fn__block" type="input" name="mode" id="mode" placeholder="25">
+                <option value="content">${this.i18n.content}</option>
+                <option value="editor">${this.i18n.editor}</option>
+              </select>
+              </div>
+              <div class="b3-dialog-input">
               <label for="type">${this.i18n.type}</label>
               <select class="b3-select fn__block" type="input" name="type" id="type" placeholder="25">
                 <option value="grid">${this.i18n.grid}</option>
@@ -86,11 +94,18 @@ class BackgroundGridPlugin extends Plugin {
           </div>`,
       width: "520px",
     });
+    const mode = dialog.element.querySelector("#mode");
     const type = dialog.element.querySelector("#type");
     const gridSize = dialog.element.querySelector("#gridSize");
     const gridWidth = dialog.element.querySelector("#gridWidth");
     const gridColor = dialog.element.querySelector("#gridColor");
     const gridOpacity = dialog.element.querySelector("#gridOpacity");
+    mode.value = this.config.setting.mode;
+    mode.addEventListener("change", (e) => {
+      const value = e.target.value;
+      this.config.setting.mode = value;
+      this.apply();
+    });
     type.value = this.config.setting.type;
     type.addEventListener("change", (e) => {
       const value = e.target.value;
@@ -164,6 +179,7 @@ class BackgroundGridPlugin extends Plugin {
       styleId: "background-grid-plugin",
       setting: {
         enabled: true,
+        mode: "content",
         type: "grid", // grid or point
         width: 20,
         size: 1,
@@ -179,7 +195,13 @@ class BackgroundGridPlugin extends Plugin {
     let result;
     let opacity = parseInt(this.config.setting.opacity, 10);
     if (opacity >= 100) {
-      opacity = '';
+      opacity = "";
+    }
+    let selector;
+    if (this.config.setting.mode === "content") {
+      selector = ".protyle-wysiwyg";
+    } else {
+      selector = ".protyle-content";
     }
     const color = this.config.setting.color.startsWith("#")
       ? `${this.config.setting.color}${opacity}`
@@ -187,12 +209,12 @@ class BackgroundGridPlugin extends Plugin {
     if (!this.config.setting.enabled) {
       result = "";
     } else if (this.config.setting.type === "grid") {
-      result = `.protyle-wysiwyg {
+      result = `${selector} {
         background: linear-gradient(90deg, ${color} ${this.config.setting.size}px, transparent 0), linear-gradient(${color} ${this.config.setting.size}px, transparent 0);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
       }`;
     } else {
-      result = `.protyle-wysiwyg {
+      result = `${selector} {
         background: radial-gradient(circle, ${color} ${this.config.setting.size}px, transparent ${this.config.setting.size}px);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
       }`;

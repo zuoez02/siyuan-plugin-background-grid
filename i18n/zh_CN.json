@@ -11,5 +11,8 @@
  "close": "关闭",
  "reset": "重置",
  "turnOn": "开启背景",
- "turnOff": "关闭背景"
+ "turnOff": "关闭背景",
+ "mode": "模式",
+ "content": "内容区域(有滚动跟随)",
+ "editor": "编辑器区域(无滚动跟随)"
 }
