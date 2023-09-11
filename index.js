@@ -27,6 +27,7 @@ const defaultConfig = {
     size: 1,
     color: "#999999",
     opacity: 15,
+    editable: "yes",
   },
 };
 
@@ -58,14 +59,21 @@ class BackgroundGridPlugin extends Plugin {
           <div id="background-grid-dialog" class="b3-dialog__content">
               <div class="b3-dialog-input">
               <label for="mode">${this.i18n.mode}</label>
-              <select class="b3-select fn__block" type="input" name="mode" id="mode" placeholder="25">
+              <select class="b3-select fn__block" type="input" name="mode" id="mode">
                 <option value="content">${this.i18n.content}</option>
                 <option value="editor">${this.i18n.editor}</option>
               </select>
               </div>
               <div class="b3-dialog-input">
+              <label for="mode">${this.i18n.editable}</label>
+              <select class="b3-select fn__block" type="input" name="editable" id="editable">
+                <option value="yes">${this.i18n.yes}</option>
+                <option value="no">${this.i18n.no}</option>
+              </select>
+              </div>
+              <div class="b3-dialog-input">
               <label for="type">${this.i18n.type}</label>
-              <select class="b3-select fn__block" type="input" name="type" id="type" placeholder="25">
+              <select class="b3-select fn__block" type="input" name="type" id="type">
                 <option value="grid">${this.i18n.grid}</option>
                 <option value="point">${this.i18n.point}</option>
               </select>
@@ -95,6 +103,7 @@ class BackgroundGridPlugin extends Plugin {
       width: "520px",
     });
     const mode = dialog.element.querySelector("#mode");
+    const editable = dialog.element.querySelector("#editable");
     const type = dialog.element.querySelector("#type");
     const gridSize = dialog.element.querySelector("#gridSize");
     const gridWidth = dialog.element.querySelector("#gridWidth");
@@ -104,6 +113,12 @@ class BackgroundGridPlugin extends Plugin {
     mode.addEventListener("change", (e) => {
       const value = e.target.value;
       this.config.setting.mode = value;
+      this.apply();
+    });
+    editable.value = this.config.setting.editable;
+    editable.addEventListener("change", (e) => {
+      const value = e.target.value;
+      this.config.setting.editable = value;
       this.apply();
     });
     type.value = this.config.setting.type;
@@ -185,6 +200,7 @@ class BackgroundGridPlugin extends Plugin {
         size: 1,
         color: "#999999",
         opacity: 15,
+        editable: "no",
       },
     };
     this.apply();
@@ -206,15 +222,19 @@ class BackgroundGridPlugin extends Plugin {
     const color = this.config.setting.color.startsWith("#")
       ? `${this.config.setting.color}${opacity}`
       : this.config.setting.color;
+    let contenteditable='';
+    if (this.config.setting.editable === "yes") {
+      contenteditable=':has(.protyle-title__input[contenteditable="true"])'
+    }
     if (!this.config.setting.enabled) {
       result = "";
     } else if (this.config.setting.type === "grid") {
-      result = `${selector} {
+      result = `${selector}${contenteditable} {
         background: linear-gradient(90deg, ${color} ${this.config.setting.size}px, transparent 0), linear-gradient(${color} ${this.config.setting.size}px, transparent 0);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
       }`;
     } else {
-      result = `${selector} {
+      result = `${selector}${contenteditable} {
         background: radial-gradient(circle, ${color} ${this.config.setting.size}px, transparent ${this.config.setting.size}px);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
       }`;

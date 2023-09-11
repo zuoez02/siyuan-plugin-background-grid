@@ -14,5 +14,8 @@
     "turnOff": "Turn off the function",
     "mode": "Mode",
     "content": "Content(scroll)",
-    "editor": "Editor(fixed)"
+    "editor": "Editor(fixed)",
+    "editable": "Close when readonly",
+    "yes": "yes",
+    "no": "no"
 }
