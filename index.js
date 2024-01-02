@@ -217,7 +217,7 @@ class BackgroundGridPlugin extends Plugin {
     if (this.config.setting.mode === "content") {
       selector = ".protyle-wysiwyg";
     } else {
-      selector = ".protyle-content";
+      selector = "";
     }
     const color = this.config.setting.color.startsWith("#")
       ? `${this.config.setting.color}${opacity}`
@@ -229,12 +229,12 @@ class BackgroundGridPlugin extends Plugin {
     if (!this.config.setting.enabled) {
       result = "";
     } else if (this.config.setting.type === "grid") {
-      result = `${selector}${contenteditable} {
+      result = `.protyle-content${contenteditable} ${selector} {
         background: linear-gradient(90deg, ${color} ${this.config.setting.size}px, transparent 0), linear-gradient(${color} ${this.config.setting.size}px, transparent 0);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
       }`;
     } else {
-      result = `${selector}${contenteditable} {
+      result = `.protyle-content${contenteditable} ${selector} {
         background: radial-gradient(circle, ${color} ${this.config.setting.size}px, transparent ${this.config.setting.size}px);
         background-size: ${this.config.setting.width}px ${this.config.setting.width}px;
       }`;
