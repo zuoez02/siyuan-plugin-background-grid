@@ -3,20 +3,6 @@ const { Plugin, Menu, Dialog } = require("siyuan");
 const iconBackgroundGrid =
   '<svg t="1689238674809" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10159" width="200" height="200"><path d="M392.52992 237.09696v243.968h238.94016V266.96704zM392.52992 786.87232l238.94016-29.87008v-207.6672H392.52992zM699.72992 481.06496H921.6V337.36704c0-18.76992-15.22688-36.0448-33.87392-38.36928l-187.99616-23.5008v205.568zM324.27008 481.06496V228.56704l-187.99616-23.5008C117.62688 202.73152 102.4 216.19712 102.4 234.96704v246.09792h221.87008zM324.27008 549.33504H102.4v239.6672c0 18.80064 15.22688 32.26624 33.87392 29.93152l187.99616-23.53152v-246.0672zM699.72992 549.33504v199.13728l187.99616-23.47008c18.6368-2.33472 33.87392-19.59936 33.87392-38.4V549.33504H699.72992z" p-id="10160"></path></svg>';
 
-function registerIcon(name, size, svg) {
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    `
-          <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                  <symbol id="${name}" viewBox="0 0 ${size} ${size}">
-                      ${svg}
-                  </symbol>
-              </defs>
-          </svg>`
-  );
-}
-
 const defaultConfig = {
   styleId: "background-grid-plugin",
   setting: {
@@ -35,7 +21,11 @@ class BackgroundGridPlugin extends Plugin {
   config = defaultConfig;
 
   async onload() {
-    registerIcon("iconBackgroundGrid", 200, iconBackgroundGrid);
+    this.addIcons(`
+      <symbol id="iconBackgroundGrid" viewBox="0 0 200 200">
+          ${iconBackgroundGrid}
+      </symbol>
+    `)
     await this.loadConfig();
     this.saveConfig();
     const topBarElement = this.addTopBar({
